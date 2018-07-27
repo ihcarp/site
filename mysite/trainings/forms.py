@@ -42,6 +42,10 @@ class CommentForm(forms.ModelForm):
 
 
 class FeedbackForm(forms.ModelForm):
+    feedback =forms.CharField(
+        widget=forms.Textarea(
+            attrs={'rows': 5, 'placeholder': 'What did you think of the training?'}
+        ),)
     class Meta:
         model = Feedback
         fields =['feedback']
