@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+{% if search_posts %}
+{% for post in search_posts %}
+    <div class="card border-secondary" style="margin: 20px">
+    <div class="card-header text-white bg-dark ">{{post.title}}</div>
+    <div class="card-body">
+        <div class="row">
+        <div class="col"><h5 class="card-title text-muted ">{{post.posted_by}}</h5>
+        </div>
+        <div class="col text-right text-muted ">
+                <p>{{post.posted_on}}</p>
+        </div>
+    </div>
+        <p class="card-text">{{post.description}}</p>
+        </div>
+        <div class="text-right" margin:10px>
+        <a href ="{% url 'visit_post' post.topic.language.id post.topic.id post.id %}" class="btn ">view more</a>
+    </div>
+    
+    </div>
+    {% endfor %}
+    
+    {% else %}
+    <p>Sorry, no items match your search.</p>
+    {% endif %}
+{% endblock %}

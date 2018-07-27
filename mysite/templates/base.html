@@ -1,0 +1,108 @@
+{% load static %}
+ 
+{% load humanize %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My page title</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> 
+    {% block stylesheet %}{% endblock %}
+    <style>
+        .form-control:focus {
+            outline: 0 !important;
+            border-color: initial;
+            box-shadow: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    {% block body %}
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
+        <nav class="container">
+            <p class="nav-item">
+                <a href={% url 'index' %}>
+                    <img src="/static/img/learn-share.jpg" class="rounded" alt="logo" height="50px" width="50px" style="margin-top:10px" align="left"></img>
+                </a>
+            </p>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Training</a>
+                    {% if language_list %}
+                    <div class="dropdown-menu ">
+                        {% for language in language_list %}
+                        <a class="dropdown-item" href="{% url 'topics' language.id %}">{{language.language}} </a>
+                        {% endfor %}
+                    </div>
+                    {% else %} {% endif %}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get" accept-charset="utf-8">
+                <div class="row">
+                    <div class="input-group">
+                        <input class="form-control py-2 border-right-0 border" type="text" name="q" placeholder="Search">
+                        <span class="input-group-append">
+                            <button class="btn btn-outline-secondary " type="submit" id="example-search-input">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                        <a class="dropdown-item" href="{% url 'my_account' %}">My account</a>
+                        <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+                    </div>
+                </li>
+            </ul>
+            {% else %}
+            <form class="form-inline ml-auto">
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+                <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
+            </form>
+            {% endif %}
+            </div>
+        </nav>
+    </nav>
+    <div class="container" style="padding: 30px">
+        {% block content %} {% endblock %}
+    </div>
+    <div>
+        <span class="text-muted fixed-bottom">
+            <p>Copyright</p>
+        </span>
+    </div>
+
+    {% endblock body %} {% block footer_scripts %}
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script> {% endblock %}
+
+</body>
+
+</html>

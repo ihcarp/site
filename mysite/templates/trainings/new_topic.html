@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+
+{% load static %} 
+{% block content %}
+ {% block breadcrumb %}
+<nav aria-label="breadcrumb" style="padding-top: 20px">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item ">
+            <a href="{% url 'topics' language.id %}">{{language.language}}</a>
+        </li>
+        <li class="breadcrumb-item active">New Topic</li>
+    </ol>
+</nav>
+{% endblock %}
+
+<form method="post" class="mb-4">
+    {% csrf_token %} {% include 'includes/form.html' %}
+    <button type="submit" class="btn btn-success">Post a topic</button>
+</form>
+
+
+<div class="card-columns" style="margin: 20px">
+    {% for topic in language.topics.all %}
+    <div class="card bg-light">
+        <div class="card-body text-center">
+            <a href="{% url 'posts' language.id topic.id %}" class="card-text">{{topic.name}}</a>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

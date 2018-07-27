@@ -1,0 +1,30 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" style="padding-top: 20px">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">{{language.language}}</li>
+    </ol>
+</nav>
+
+{% endblock %}
+
+<body>
+    <a class="btn btn-primary" href="{% url 'new_topic' language.id %}" role="button">Add a topic</a>
+    <div class="card-columns" style="margin: 20px">
+        {% for topic in language.topics.all %}
+        <div class="card bg-light" >
+            <div class="card-body text-center">
+                <a href="{% url 'posts' language.id topic.id %}" class="card-text">{{topic.name}}</a>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</body>
+{% endblock %}
+
+</html>

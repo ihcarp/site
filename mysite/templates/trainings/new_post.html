@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %} 
+
+{% block content %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb" style="padding-top: 20px">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item "><a href="{% url 'topics' topic.language.id %}">{{topic.language.language}}</a></li>
+        <li class="breadcrumb-item "><a href="{% url 'posts' topic.language.id topic.id %}">{{topic.name}}</a></li>
+        <li class="breadcrumb-item active">New Post</li>
+        </ol>
+      </nav>
+{% endblock %}
+
+<form method="post" class="mb-4" enctype="multipart/form-data">
+        {% csrf_token %} {% include 'includes/form.html' %}
+        <button type="submit" class="btn btn-success">Post new training</button>
+    </form>
+
+{% endblock %}
