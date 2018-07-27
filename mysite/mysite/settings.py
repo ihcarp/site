@@ -40,7 +40,6 @@ INSTALLED_APPS = [
 
     'widget_tweaks',
     'django.contrib.humanize',
-    'favit'
 
     'trainings.apps.TrainingsConfig',
     'accounts.apps.AccountsConfig',

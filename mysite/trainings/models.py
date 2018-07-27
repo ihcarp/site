@@ -24,8 +24,7 @@ class Post(models.Model):
     description = models.TextField(max_length=500,default='')
     views = models.PositiveIntegerField(default=0)
     pdf_file = models.FileField(upload_to='uploads/')
-    no_of_ratings =models.PositiveIntegerField(default=0)
-    avg_rating = models.DecimalField(max_digits=2,decimal_places=1,default=0)
+    
     def __str__(self):
         return (self.title)
 
@@ -35,6 +34,16 @@ class Comments(models.Model):
     commented_by =models.ForeignKey(User,on_delete=models.CASCADE)
     commented_on =models.DateTimeField(auto_now_add=True)
 
-class Ratings(models.Model):
-    feedback = models.CharField(max_length=500)
-    rating =
+    def __str__(self):
+        return (self.message)
+
+class Feedback(models.Model):
+    feedback = models.CharField(max_length=500,null=True)
+    rating = models.PositiveIntegerField()
+    avg_rating = models.DecimalField(max_digits=2,decimal_places=1,default=0)
+    rated_by = models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)
+    rated_post = models.ForeignKey(Post,related_name='posts',on_delete=models.CASCADE)
+    rated_on = models.DateTimeField(auto_now_add=True,)
+
+    class Meta:
+        unique_together = (('rated_by','rated_post'),)

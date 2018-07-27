@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponse
-from .models import Language,Topic,Post
+from .models import Language,Topic,Post,Feedback
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import NewTopicForm,NewPostForm,CommentForm
+from .forms import NewTopicForm,NewPostForm,CommentForm,FeedbackForm
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -191,3 +191,27 @@ def new_comment(request,language_id,topic_id,post_id):
         'form':form,
     }
     return render(request,'trainings/comment_post.html',context)
+
+@login_required
+def feedback_post(request,language_id,topic_id,post_id):
+    post =get_object_or_404(Post,pk=post_id)
+    language_list = getLangList
+
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback = form.save(commit=False)
+            feedback.rating = request.POST.get('rating')
+            feedback.rated_by = request.user
+            feedback.rated_post = post
+            feedback.save()
+            return redirect('visit_post',language_id =language_id,topic_id=topic_id,post_id=post_id)
+    else:
+        form =FeedbackForm()
+    context = {
+        'language_list':language_list,
+        'post':post,
+        'form':form,
+    }
+    return render(request,'trainings/submit_feedback.html',context)
+

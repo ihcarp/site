@@ -1,5 +1,5 @@
 from django import forms
-from .models import Topic,Post,Comments
+from .models import Topic,Post,Comments,Feedback
 from django.core.exceptions import ValidationError
 from django.core.exceptions import NON_FIELD_ERRORS
 
@@ -41,3 +41,7 @@ class CommentForm(forms.ModelForm):
         fields =['message']
 
 
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields =['feedback']

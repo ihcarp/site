@@ -34,8 +34,7 @@
             <div class="p-2">
             <a href="{% url 'comment_post' post.topic.language.id post.topic.id post.id %}" class="btn btn-secondary">Comment</a></div>
             <div class="p-2 ml-auto">
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-                            Rate Training</button>
+                <a href="{% url 'submit_feedback' post.topic.language.id post.topic.id post.id %}" class="btn btn-secondary">Rate Training</a></div>
                 </div>
             </div>
 
