@@ -23,7 +23,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(max_length=500,default='')
     views = models.PositiveIntegerField(default=0)
-    pdf_file = models.FileField(upload_to='uploads/')
+    pdf_file = models.FileField(upload_to='uploads/',blank=True)
     
     def __str__(self):
         return (self.title)
@@ -38,7 +38,7 @@ class Comments(models.Model):
         return (self.message)
 
 class Feedback(models.Model):
-    feedback = models.CharField(max_length=500,null=True)
+    feedback = models.CharField(max_length=500,null=True,blank=True)
     rating = models.PositiveIntegerField()
     avg_rating = models.DecimalField(max_digits=2,decimal_places=1,default=0)
     rated_by = models.ForeignKey(User,related_name='users',on_delete=models.CASCADE)

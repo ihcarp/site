@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import NewTopicForm,NewPostForm,CommentForm,FeedbackForm
 from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q,Avg
 from django.views.generic import UpdateView, ListView
 import operator
 from functools import reduce
@@ -118,7 +118,10 @@ def new_post(request,language_id,topic_id):
 def visit_post(request,language_id,topic_id,post_id):
     post =get_object_or_404(Post,pk=post_id)
     language_list = getLangList
-    
+
+    feedback_post = Feedback.objects.filter(rated_post=post)
+    avg_rating = feedback_post.aggregate(Avg('rating'))
+
     session_key = 'viewed_post_{}'.format(post.pk)
     if not request.session.get(session_key, False):
         post.views +=1
@@ -128,6 +131,7 @@ def visit_post(request,language_id,topic_id,post_id):
     context = {
         'language_list':language_list,
         'post':post,
+        'avg_rating':avg_rating,
     }
 
     return render(request, 'trainings/visit_post.html',context)

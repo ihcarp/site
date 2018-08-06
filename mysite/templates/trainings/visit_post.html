@@ -41,6 +41,7 @@
         </div>
 
     </div>
+    {{% if post.pdf_file %}}
     <div class="container" style="border:ridge;padding: 0px;margin-top: 20px">
         <div class="embed-responsive embed-responsive" style="padding-bottom: 100%;">
             <object class="embed-responsive-item" data="/media/{{post.pdf_file}}" type="application/pdf" internalinstanceid="9" title="">
@@ -49,7 +50,7 @@
             </object>
         </div>
     </div>
-
+    {{% endif %}}
     <div class="container">
 
         <h3>

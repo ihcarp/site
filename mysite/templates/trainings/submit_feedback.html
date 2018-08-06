@@ -51,7 +51,7 @@
 </style>
 {% endblock %}
 
-<form class="form my-2 my-lg-0" action="{% url 'submit_feedback' post.topic.language.id post.topic.id post.id %}" method="post" accept-charset="utf-8">
+<form class="form my-2 my-lg-0" action="{% url 'submit_feedback' post.topic.language.id post.topic.id post.id %}" method="post" accept-charset="utf-8" novalidate>
         {% csrf_token %} {% include 'includes/form.html' %}
 
     <div><span class="text-mute">Rate the training:</span>

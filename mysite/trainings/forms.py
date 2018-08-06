@@ -27,8 +27,10 @@ class NewPostForm(forms.ModelForm):
 
     description =forms.CharField(
         widget=forms.Textarea(
-            attrs={'rows': 5, 'placeholder': 'Please add description of your training.'}
+            attrs={'placeholder': 'Please add description of your training.'}
         ),)
+
+    pdf_file = forms.FileField(required =False)
 
     class Meta:
         model = Post
@@ -42,7 +44,7 @@ class CommentForm(forms.ModelForm):
 
 
 class FeedbackForm(forms.ModelForm):
-    feedback =forms.CharField(
+    feedback =forms.CharField(required=False,
         widget=forms.Textarea(
             attrs={'rows': 5, 'placeholder': 'What did you think of the training?'}
         ),)
